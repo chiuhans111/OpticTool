@@ -1,21 +1,27 @@
 <template>
-    <div>
+    <div class="ui_sheet ui_block">
         <p>Lens Data</p>
-        <div class="lens-sheet_row"
+        <div class="ui_sheet-row"
             v-for="surface, i in system.surfaces" :key="i">
-            <component :is="surface.component"
-                :surface="surface">
-            </component>
-            <div class="lens-sheet_row-end">
-                <button @click="addSurface(i)"
-                    class="btn_add">Add</button>
-                <button
-                    @click="system.surfaces.splice(i, 1)">Del</button>
-
+            <div class="row">
+                <div class="ui_sheet-row-ui">
+                    <button
+                        @click="system.surfaces.splice(i, 1)">-</button>
+                    <button
+                        @click="addSurface(i)">+</button>
+                </div>
+                <OpticSurfaceComponent :surface="surface"></OpticSurfaceComponent>
             </div>
         </div>
-        <button
-            @click="addSurface(system.surfaces.length)">Add</button>
+        <div class="ui_sheet-row">
+            <div class="row">
+                <div class="ui_sheet-row-ui">
+                    <button
+                        @click="addSurface(system.surfaces.length)">+</button>
+                </div>
+            </div>
+        </div>
+
         <p>t=thickness, c=curvature (1/R), n=index of
             refraction</p>
     </div>
@@ -24,7 +30,8 @@
 <script>
 import OpticSurface from '@/optic/OpticSurface'
 import OpticSystem from '@/optic/OpticSystem'
-import OpticSurfaceComponent from './surface/OpticSurfaceComponent.vue'
+import OpticSurfaceComponent from './OpticSurfaceComponent.vue'
+
 export default {
     props: {
         system: OpticSystem
@@ -42,21 +49,4 @@ export default {
 
 </script>
 <style lang="scss" scoped>
-.lens-sheet_row {
-    position: relative;
-    margin: 5px;
-    width: fit-content;
-
-    &-end {
-        display: flex;
-        position: absolute;
-        left: 100%;
-        top: 0;
-    }
-}
-
-.btn_add {
-    position: relative;
-    top: -10px;
-}
 </style>

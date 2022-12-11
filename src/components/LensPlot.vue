@@ -1,6 +1,6 @@
 <template>
-    <div class="lens-plot_main">
-        <div ref="container" class="lens-plot_container">
+    <div class="lens_plot ui_block">
+        <div ref="container" class="lens_plot-container">
             <canvas ref="canvas"></canvas>
         </div>
     </div>
@@ -9,7 +9,7 @@
 <script>
 import OpticSystem from '@/optic/OpticSystem'
 import RayTrace from '@/optic/RayTrace'
-
+import _ from 'lodash'
 export default {
     props: {
         system: OpticSystem
@@ -27,7 +27,8 @@ export default {
             this.$refs.canvas.height = rect.height
             this.update()
         },
-        update() {
+        update: _.throttle(function () {
+            console.log('update')
             /**@type {HTMLCanvasElement} */
             const canvas = this.canvas
             /**@type {CanvasRenderingContext2D} */
@@ -37,12 +38,10 @@ export default {
 
             ctx.translate(canvas.width / 2, canvas.height / 2)
 
-
-
             let ttl = 0
 
             for (let surface of this.system.surfaces) {
-                ttl += surface.thickness
+                ttl += surface.thickness.value
             }
 
             let scale = canvas.width / ttl * 0.8
@@ -68,7 +67,6 @@ export default {
             }
 
 
-
             ctx.lineWidth = 2 / scale
             ctx.strokeStyle = 'black'
 
@@ -81,7 +79,7 @@ export default {
                 ctx.beginPath()
                 for (let i = 0; i <= N; i++) {
                     let r = (i / N - 0.5) * 2 * R
-                    let z = surface.shape(r)
+                    let z = surface.shape.surface(r)
 
                     if (i == 0)
                         ctx.moveTo(z0 + z, r)
@@ -90,9 +88,9 @@ export default {
 
                 }
                 ctx.stroke()
-                z0 += surface.thickness
+                z0 += surface.thickness.value
             }
-        }
+        }, 50)
     },
     watch: {
         system: {
@@ -115,18 +113,17 @@ export default {
 }
 </script>
 
-<style scoped>
-.lens-plot_main {
+<style scoped lang="scss">
+.lens_plot {
     position: relative;
     height: 500px;
     max-width: 700px;
-}
 
-.lens-plot_container {
-    position: relative;
-    overflow: hidden;
-    width: 100%;
-    height: 100%;
-    border: solid 1px black;
+    &-container {
+        position: relative;
+        overflow: hidden;
+        width: 100%;
+        height: 100%;
+    }
 }
 </style>

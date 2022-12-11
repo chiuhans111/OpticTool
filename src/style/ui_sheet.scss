@@ -1,0 +1,13 @@
+.ui_sheet {
+    &-row {
+        position: relative;
+        margin: 5px;
+        width: fit-content;
+
+        &-ui {
+            display: inline-block;
+            margin-right: 5px;
+        }
+    }
+    box-sizing: border-box;
+}

@@ -3,8 +3,9 @@
       <div>
         <LensPlot :system="system"></LensPlot>
       </div>
-      <div>
+      <div class="row">
         <LensSheet :system="system"></LensSheet>
+        <FieldSheet :system="system"></FieldSheet>
       </div>
   </div>
 </template>
@@ -13,6 +14,8 @@
 import LensSheet from './components/LensSheet.vue'
 import LensPlot from './components/LensPlot.vue'
 import optic from './optic'
+import serializer from './optic/Serializer'
+import FieldSheet from './components/FieldSheet.vue'
 
 export default {
   name: 'App',
@@ -23,7 +26,11 @@ export default {
   },
   components: {
     LensSheet,
-    LensPlot
+    LensPlot,
+    FieldSheet
+},
+  mounted(){
+    serializer.serialize(this.system)
   },
   watch: {
     system: {

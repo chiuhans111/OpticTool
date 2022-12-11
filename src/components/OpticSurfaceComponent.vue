@@ -1,30 +1,39 @@
 <template>
     <div>
         <label for="thickness">t=</label>
-        <input id="thickness" type="number" step="0.05"
-            v-model.number="surface.thickness">
+        <OpticVarInput id="thickness" :step="0.01"
+            :variable="surface.thickness" />
         <span>, </span>
         <label for="curvature">c=</label>
-        <input id="thickness" type="number" step="0.002"
-            v-model.number="surface.curvature">
+        <OpticVarInput id="curvature" type="number"
+            :step="0.0001"
+            :variable="surface.shape.curvature" />
         <span>, </span>
         <label for="material">n=</label>
         <input id="material" type="number" step="0.01"
             min="1" max="99"
             v-model.number="surface.material.index">
+        <span>R={{ (1 /
+                surface.shape.curvature.value).toFixed(2)
+        }},
+        </span>
+
     </div>
 </template>
 
 <script>
 import OpticSurface from '@/optic/OpticSurface'
+import OpticVarInput from './OpticVarInput.vue'
 
 export default {
     props: {
         surface: OpticSurface
     },
+    components: {
+        OpticVarInput
+    },
     data() {
         return {
-            thickness: 0
         }
     },
 }

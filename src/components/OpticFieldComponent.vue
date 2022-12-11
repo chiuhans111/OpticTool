@@ -1,0 +1,33 @@
+<template>
+    <div>
+        <label for="angle">angle=</label>
+        <OpticVarInput id="angle" :step="0.02"
+            :variable="field.angle" />
+    </div>
+</template>
+
+<script>
+import OpticField from '@/optic/OpticField'
+import OpticVarInput from './OpticVarInput.vue'
+
+export default {
+    props: {
+        field: OpticField
+    },
+    components: {
+        OpticVarInput
+    },
+    data() {
+        return {
+        }
+    },
+}
+</script>
+
+<style>
+input {
+    width: 60px;
+    height: 20px;
+    margin: 0px 3px;
+}
+</style>

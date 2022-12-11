@@ -2,28 +2,27 @@ import OpticSystem from "./OpticSystem"
 import * as tf from "@tensorflow/tfjs"
 
 
-
-
 /**
- * @param system {OpticSystem} 
- * @param raypos {tf.Tensor}
- * @param raydir {tf.Tensor}
+ * @param {OpticSystem} system 
+ * @param {tf.Tensor} raypos
+ * @param {tf.Tensor} raydir 
 */
 function RayTrace(system) {
     tf.engine().startScope()
     let raypos = []
     let raydir = []
-    let N = 11
+    let N = 7
 
-    const R = 20
+    const R = system.pupilDiameter.value
 
-    for (let i = 0; i < N; i++) {
-        let f = (i / N - 0.5) * R
-        raypos.push([0, f * 1, -1])
-        raydir.push([0, 0, 1])
+    for (let field of system.fields) {
+        for (let i = 0; i < N; i++) {
+            let f = (i / N - 0.5)
 
-        raypos.push([0, f * 1 + 10, -1])
-        raydir.push([0, -0.5, 1])
+            raypos.push(field.raypos(f, system))
+            raydir.push(field.raydir(f, system))
+
+        }
     }
 
     raypos = tf.tensor(raypos).transpose()
@@ -39,8 +38,8 @@ function RayTrace(system) {
         let n2 = surface.material.index
 
 
-        raypos = surface.trace(raypos.sub(tf.tensor([[0], [0], [z]])), raydir)
-        let normal = surface.normal(raypos)
+        raypos = surface.shape.trace(raypos.sub(tf.tensor([[0], [0], [z]])), raydir)
+        let normal = surface.shape.normal(raypos)
 
 
         raydir = raydir.div(raydir.mul(raydir).sum(0).sqrt()).mul(n1)
@@ -53,7 +52,8 @@ function RayTrace(system) {
         raypos = raypos.add(tf.tensor([[0], [0], [z]]))
         result.push(raypos.arraySync())
         n1 = n2
-        z += surface.thickness
+
+        z += surface.thickness.value
     }
     tf.engine().endScope()
 

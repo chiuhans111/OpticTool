@@ -1,6 +1,7 @@
-import OpticMaterial from "./OpticMaterial"
+import OpticMaterial from "./material/OpticMaterial"
+import OpticField from "./OpticField"
 import OpticSurface from "./OpticSurface"
-
+import OpticVar from "./OpticVar"
 
 class OpticSystem {
     surfaces = [
@@ -12,6 +13,16 @@ class OpticSystem {
         new OpticSurface(35, -0.04, new OpticMaterial(1)),
         new OpticSurface(0, 0, new OpticMaterial(1))
     ]
+
+    fields = [
+        new OpticField(0),
+        new OpticField(10),
+        new OpticField(20),
+    ]
+
+    pupilDiameter = new OpticVar(20)
+    principlePlaneZ = new OpticVar(10)
 }
+
 
 export default OpticSystem

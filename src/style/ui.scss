@@ -1,0 +1,9 @@
+@import './ui_sheet.scss';
+
+.ui_block {
+    padding: 2px;
+    border: solid 1px black;
+    margin-bottom: -1px;
+    margin-right: -1px;
+    box-sizing: border-box;
+}

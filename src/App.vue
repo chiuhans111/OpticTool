@@ -1,7 +1,8 @@
 <template>
   <div class="container">
-      <div>
+      <div class="row top_row">
         <LensPlot :system="system"></LensPlot>
+        <AnalyzePlot :system="system"></AnalyzePlot>
       </div>
       <div class="row">
         <LensSheet :system="system"></LensSheet>
@@ -16,6 +17,7 @@ import LensPlot from './components/LensPlot.vue'
 import optic from './optic'
 import serializer from './optic/Serializer'
 import FieldSheet from './components/FieldSheet.vue'
+import AnalyzePlot from './components/AnalyzePlot.vue'
 
 export default {
   name: 'App',
@@ -27,7 +29,8 @@ export default {
   components: {
     LensSheet,
     LensPlot,
-    FieldSheet
+    FieldSheet,
+    AnalyzePlot
 },
   mounted(){
     serializer.serialize(this.system)
@@ -42,6 +45,8 @@ export default {
 }
 </script>
 
-<style>
-
+<style scoped>
+.top_row{
+  height: 500px;
+}
 </style>

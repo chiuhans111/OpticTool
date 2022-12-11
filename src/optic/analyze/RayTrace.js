@@ -1,4 +1,4 @@
-import OpticSystem from "./OpticSystem"
+import OpticSystem from "../OpticSystem"
 import * as tf from "@tensorflow/tfjs"
 
 
@@ -7,30 +7,11 @@ import * as tf from "@tensorflow/tfjs"
  * @param {tf.Tensor} raypos
  * @param {tf.Tensor} raydir 
 */
-function RayTrace(system) {
+function RayTrace(system, raypos, raydir) {
     tf.engine().startScope()
-    let raypos = []
-    let raydir = []
-    let N = 7
-
-    const R = system.pupilDiameter.value
-
-    for (let field of system.fields) {
-        for (let i = 0; i < N; i++) {
-            let f = (i / N - 0.5)
-
-            raypos.push(field.raypos(f, system))
-            raydir.push(field.raydir(f, system))
-
-        }
-    }
-
-    raypos = tf.tensor(raypos).transpose()
-    raydir = tf.tensor(raydir).transpose()
-
+    
     let result = []
-    result.push(raypos.arraySync())
-    let surface = system.surfaces[0]
+    result.push(raypos.array())
 
     let n1 = 1
     let z = 0
@@ -50,7 +31,7 @@ function RayTrace(system) {
 
 
         raypos = raypos.add(tf.tensor([[0], [0], [z]]))
-        result.push(raypos.arraySync())
+        result.push(raypos.array())
         n1 = n2
 
         z += surface.thickness.value

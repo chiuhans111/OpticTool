@@ -1,32 +1,37 @@
 <template>
     <div class="ui_sheet ui_block">
-        <p>Field Data</p>
-        <div>
-            <label for="diameter">D=</label>
-            <OpticVarInput id="diameter" :step="0.01"
-                :variable="system.pupilDiameter" />
+        <div class="ui_block-header">
+            <p>Field Data</p>
+        </div>
+        <div class="ui_block-body">
+            <div>
+                <label for="diameter">D=</label>
+                <OpticVarInput id="diameter" :step="0.01"
+                    :variable="system.pupilDiameter" />
 
-            <label for="Z">Z=</label>
-            <OpticVarInput id="Z" :step="0.01"
-                :variable="system.principlePlaneZ" />
-        </div>
-        <div class="ui_sheet-row"
-            v-for="field, i in system.fields" :key="i">
-            <div class="row">
-                <div class="ui_sheet-row-ui">
-                    <button
-                        @click="system.fields.splice(i, 1)">-</button>
-                    <button @click="addField(i)">+</button>
-                </div>
-                <OpticFieldComponent :field="field">
-                </OpticFieldComponent>
+                <label for="Z">Z=</label>
+                <OpticVarInput id="Z" :step="0.01"
+                    :variable="system.principlePlaneZ" />
             </div>
-        </div>
-        <div class="ui_sheet-row">
-            <div class="row">
-                <div class="ui_sheet-row-ui">
-                    <button
-                        @click="addField(system.fields.length)">+</button>
+            <div class="ui_sheet-row"
+                v-for="field, i in system.fields" :key="i">
+                <div class="row">
+                    <div class="ui_sheet-row-ui">
+                        <button
+                            @click="system.fields.splice(i, 1)">Del</button>
+                        <button
+                            @click="addField(i)">Add</button>
+                    </div>
+                    <OpticFieldComponent :field="field">
+                    </OpticFieldComponent>
+                </div>
+            </div>
+            <div class="ui_sheet-row">
+                <div class="row">
+                    <div class="ui_sheet-row-ui">
+                        <button
+                            @click="addField(system.fields.length)">Add</button>
+                    </div>
                 </div>
             </div>
         </div>

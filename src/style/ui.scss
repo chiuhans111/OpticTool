@@ -1,9 +1,59 @@
-@import './ui_sheet.scss';
+@import "./ui_sheet.scss";
+
+input {
+    background: black;
+    border: none;
+    color: white;
+    padding: 3px 8px;
+    border-radius: 4px;
+    margin: 0px 4px;
+
+    &:hover{
+        background-color: #111;
+    }
+}
+
+button {
+    font-weight: bold;
+    border: none;
+    background-color: #333;
+    color: white;
+    padding: 5px 7px;
+    margin: 0px 2px;
+    border-radius: 2px;
+    &:hover {
+        color: black;
+        background-color: #eee;
+    }
+
+    &:active {
+        background-color: #ccc;
+    }
+}
 
 .ui_block {
-    padding: 2px;
-    border: solid 1px black;
+    border: solid 2px #111;
+    border-radius: 5px;
+
     margin-bottom: -1px;
     margin-right: -1px;
+
     box-sizing: border-box;
+
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    // height: 100%;
+
+    &-header {
+        padding: 8px 4px;
+        background-color: #333;
+        font-weight: bold;
+    }
+
+    &-body {
+        padding: 8px 4px;
+        flex-grow: 1;
+        background-color: #222;
+    }
 }

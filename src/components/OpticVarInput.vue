@@ -9,6 +9,7 @@
 
 <script>
 import OpticVar from '@/optic/OpticVar'
+import { throttle } from '@/scripts/throttle'
 
 export default {
     props: {
@@ -20,6 +21,7 @@ export default {
             editmode: false,
             tweakmode: false,
             tweaked: false,
+            tempValue: this.variable.value
         }
     },
     methods: {
@@ -41,14 +43,19 @@ export default {
         mousemove(event) {
             if (this.tweakmode) {
                 this.tweaked = true
-                this.variable.value += event.movementX * this.step
+                this.tempValue += event.movementX * this.step
+                this.updatevalue()
             }
         },
         reset() {
             this.editmode = false
             this.tweakmode = false
 
-        }
+        },
+
+        updatevalue: throttle(10, function () {
+            this.variable.value = this.tempValue
+        })
     },
     mounted() {
         this.$refs.input.addEventListener("mousedown", this.mousedown)
@@ -74,13 +81,12 @@ export default {
 
     input {
         cursor: ew-resize;
-        border: solid 1px #EEE;
     }
 
     &-editmode {
         input {
             cursor: text;
-            background: white;
+            background: #333;
         }
     }
 

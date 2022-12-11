@@ -13,9 +13,10 @@
         <input id="material" type="number" step="0.01"
             min="1" max="99"
             v-model.number="surface.material.index">
-        <span>R={{ (1 /
+
+        <span> (R={{ (1 /
                 surface.shape.curvature.value).toFixed(2)
-        }},
+        }})
         </span>
 
     </div>

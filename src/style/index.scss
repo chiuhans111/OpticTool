@@ -1,5 +1,10 @@
 @import "./ui.scss";
 
+body{
+    background: #111;
+    color: white;
+}
+
 * {
     font-family: Arial, Helvetica, sans-serif;
     margin: 0;
@@ -7,10 +12,13 @@
 
 .container {
     margin: auto;
-    max-width: 1000px;
+    max-width: 1500px;
     padding: 5px 5px;
 }
 
 .row {
     display: flex;
+    &>div{
+        flex-grow: 1;
+    }
 }

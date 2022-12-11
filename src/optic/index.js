@@ -1,9 +1,7 @@
 import OpticSystem from "./OpticSystem"
-import RayTrace from "./RayTrace"
-
+import * as tf from "@tensorflow/tfjs"
+tf.setBackend('cpu')
 const system = new OpticSystem()
-
-
 
 export default {
     system

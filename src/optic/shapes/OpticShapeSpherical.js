@@ -15,16 +15,22 @@ class OpticShapeSpherical {
     */
     trace(raypos, raydir) {
         const c = this.curvature.value
-        if (c == 0) {
-            const l = raypos.gather(2).div(raydir.gather(2)).mul(-1)
-            return raypos.add(raydir.mul(l))
-        } else {
-            const A = raydir.mul(raydir).sum(0).mul(c)
-            const B = raypos.mul(raydir).sum(0).mul(c).sub(raydir.gather(2)).mul(2)
-            const C = raypos.mul(raypos).sum(0).mul(c).sub(raypos.gather(2).mul(2))
-            const l = B.mul(-1).sub(B.mul(B).sub(A.mul(C).mul(4)).sqrt()).div(A).div(2)
-            return raypos.add(raydir.mul(l))
-        }
+        return tf.tidy(() => {
+            if (c == 0) {
+                const l = raypos.gather(2).div(raydir.gather(2)).mul(-1)
+                return raypos.add(raydir.mul(l))
+            } else {
+                const A = raydir.mul(raydir).sum(0).mul(c)
+                const B = raypos.mul(raydir).sum(0).mul(c).sub(raydir.gather(2)).mul(2)
+                const C = raypos.mul(raypos).sum(0).mul(c).sub(raypos.gather(2).mul(2))
+                const l = B.mul(-1).sub(B.mul(B).sub(A.mul(C).mul(4)).sqrt()).div(A).div(2)
+
+                A.dispose()
+                B.dispose()
+                C.dispose()
+                return raypos.add(raydir.mul(l))
+            }
+        })
     }
 
     /** Find the normal vector
@@ -33,12 +39,14 @@ class OpticShapeSpherical {
     */
     normal(raypos) {
         const c = this.curvature.value
-        if (c == 0) {
-            return raypos.mul(0).add(tf.tensor([[0], [0], [-1]]))
-        } else {
-            let n = raypos.sub(tf.tensor([[0], [0], [1 / c]]))
-            return n.div(n.mul(n).sum(0).sqrt())
-        }
+        return tf.tidy(() => {
+            if (c == 0) {
+                return raypos.mul(0).add(tf.tensor([[0], [0], [-1]]))
+            } else {
+                let n = raypos.sub(tf.tensor([[0], [0], [1 / c]]))
+                return n.div(n.mul(n).sum(0).sqrt())
+            }
+        })
     }
 
 

@@ -20,7 +20,7 @@ class OpticSystem {
         new OpticField(20),
     ]
 
-    pupilDiameter = new OpticVar(20)
+    pupilDiameter = new OpticVar(10)
     principlePlaneZ = new OpticVar(10)
 }
 

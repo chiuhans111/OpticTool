@@ -18,7 +18,7 @@ class OpticShapeSpherical {
     curvature = new OpticVar(0)
 
     constructor(curvature) {
-        this.curvature.value = curvature
+        this.curvature.value = curvature || this.curvature.value
     }
 
     /** Find intersection position

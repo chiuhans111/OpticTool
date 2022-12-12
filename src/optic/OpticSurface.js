@@ -10,9 +10,9 @@ import serializer from "../scripts/Serializer"
     material: "n",
 })
 class OpticSurface {
-    thickness = new OpticVar(0)
-    shape = new OpticShapeSpherical(0)
-    material = new OpticMaterial(1.5)
+    thickness = new OpticVar()
+    shape = new OpticShapeSpherical()
+    material = new OpticMaterial()
 
     constructor(thickness, curvature, material) {
         this.thickness.value = thickness || this.thickness.value

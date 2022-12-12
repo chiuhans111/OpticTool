@@ -8,7 +8,7 @@
 
 <script>
 import OpticField from '@/optic/OpticField'
-import OpticVarInput from './OpticVarInput.vue'
+import OpticVarInput from './common/OpticVarInput.vue'
 
 export default {
     props: {

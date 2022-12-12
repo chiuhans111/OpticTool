@@ -25,7 +25,7 @@
 
 <script>
 import OpticSurface from '@/optic/OpticSurface'
-import OpticVarInput from './OpticVarInput.vue'
+import OpticVarInput from './common/OpticVarInput.vue'
 
 export default {
     props: {

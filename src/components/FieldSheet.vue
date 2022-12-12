@@ -45,7 +45,7 @@
 import OpticField from '@/optic/OpticField'
 import OpticSystem from '@/optic/OpticSystem'
 import OpticFieldComponent from './OpticFieldComponent.vue'
-import OpticVarInput from './OpticVarInput.vue'
+import OpticVarInput from './common/OpticVarInput.vue'
 export default {
     props: {
         system: OpticSystem

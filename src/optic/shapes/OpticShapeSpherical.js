@@ -32,7 +32,6 @@ class OpticShapeSpherical {
             let l = raypos.gather(2).div(raydir.gather(2)).mul(-1)
 
             if (c != 0) {
-
                 const A = raydir.mul(raydir).sum(0).mul(c)
                 const B = raypos.mul(raydir).sum(0).mul(c).sub(raydir.gather(2)).mul(2)
                 const C = raypos.mul(raypos).sum(0).mul(c).sub(raypos.gather(2).mul(2))

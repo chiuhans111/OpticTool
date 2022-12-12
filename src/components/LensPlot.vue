@@ -38,6 +38,7 @@ export default {
             this.$refs.canvas.height = rect.height
             this.update()
         },
+        
         update: asyncThrottle(10, async function () {
             if (this.ctx === null) return
 

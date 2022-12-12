@@ -7,7 +7,7 @@ import serializer from "../../scripts/Serializer"
 class OpticMaterial {
     index = 1
     constructor(index) {
-        this.index = index
+        this.index = index || this.index
     }
 }
 

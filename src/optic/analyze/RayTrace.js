@@ -17,7 +17,7 @@ function RayTrace(system, raypos, raydir) {
         let n1 = 1
         let z = tf.tensor(0)
         for (let surface of system.surfaces) {
-            let n2 = surface.material.index
+            let n2 = Number(surface.material.index) || 1
 
 
             raypos = surface.shape.trace(raypos.sub(tf.tensor([[0], [0], [1]]).mul(z)), raydir)

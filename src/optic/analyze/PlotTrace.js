@@ -7,7 +7,7 @@ import RayTrace from "./RayTrace"
  * @param {OpticSystem} system 
  * @returns 
  */
-async function PlotTrace(system) {
+function PlotTrace(system) {
     let raypos = []
     let raydir = []
     let N = 7
@@ -15,7 +15,7 @@ async function PlotTrace(system) {
     // Go through every field and create rays
     for (let i = 0; i <= N; i++) {
         for (let field of system.fields) {
-            let f = (i / N - 0.5)
+            let f = (i / N - 0.5) * 2
             raypos.push(field.raypos(0, f, system))
             raydir.push(field.raydir(0, f, system))
         }
@@ -24,7 +24,7 @@ async function PlotTrace(system) {
     raypos = tf.tensor(raypos).transpose()
     raydir = tf.tensor(raydir).transpose()
 
-    return Promise.all(RayTrace(system, raypos, raydir))
+    return RayTrace(system, raypos, raydir)
 }
 
 export default PlotTrace

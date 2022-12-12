@@ -39,6 +39,7 @@
     },
     "rules": {
       "vue/no-mutating-props": "off",
+      "vue/no-unused-components": "off",
       "no-unused-vars": "off"
     }
   },

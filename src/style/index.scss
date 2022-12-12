@@ -1,13 +1,13 @@
 @import "./ui.scss";
 
-body{
+body {
     background: #111;
     color: white;
+    margin: 0;
 }
 
 * {
     font-family: Arial, Helvetica, sans-serif;
-    margin: 0;
 }
 
 .container {
@@ -18,7 +18,17 @@ body{
 
 .row {
     display: flex;
-    &>div{
+    & > div {
         flex-grow: 1;
+        height: 100%;
     }
+    flex-wrap: wrap;
+}
+
+.content {
+    padding: 10px;
+}
+
+a {
+    color: lightblue;
 }

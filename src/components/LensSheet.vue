@@ -28,9 +28,11 @@
                     </div>
                 </div>
             </div>
-
-            <p>t=thickness, c=curvature (1/R), n=index of
-                refraction</p>
+            <div class="content">
+                <p>t=thickness, c=curvature (1/R), n=index
+                    of
+                    refraction</p>
+            </div>
         </div>
     </div>
 </template>

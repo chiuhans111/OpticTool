@@ -1,9 +1,25 @@
 <template>
     <div class="optic_var_input" :class="{
-        'optic_var_input-editmode': editmode
+        'optic_var_input-editmode': editmode,
+        'optic_var_input-optimize': variable.optimize
     }">
-        <input ref="input" type="number"
+        <input class="draggable" ref="input" type="number"
             v-model="variable.value" :step="step">
+
+        <div ref="menu" class="optic_var_input-menu"
+            v-if="editmode" @mousedown="menuclick">
+            <div class="ui_block">
+                <div class="ui_block-body">
+                    <div class="content">
+                        <input type="checkbox"
+                            name="optimize" id="optimize"
+                            v-model="variable.optimize">
+                        <label
+                            for="optimize">Optimize</label>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -26,6 +42,7 @@ export default {
     },
     methods: {
         mousedown(event) {
+            this.tempValue = this.variable.value
             if (!this.editmode) {
                 event.preventDefault()
                 this.tweakmode = true
@@ -47,12 +64,13 @@ export default {
                 this.updatevalue()
             }
         },
-        reset() {
+        reset(event) {
             this.editmode = false
             this.tweakmode = false
-
         },
-
+        menuclick(event) {
+            event.preventDefault()
+        },
         updatevalue: throttle(10, function () {
             this.variable.value = this.tempValue
         })
@@ -69,7 +87,7 @@ export default {
         removeEventListener("mousemove", this.mousemove)
         this.$refs.input.removeEventListener("blur", this.reset)
 
-    },
+    }
 
 }
 
@@ -78,16 +96,35 @@ export default {
 <style scoped lang="scss">
 .optic_var_input {
     display: inline-block;
+    position: relative;
 
-    input {
+    input.draggable {
         cursor: ew-resize;
     }
 
     &-editmode {
-        input {
+        input.draggable {
             cursor: text;
             background: #333;
         }
+    }
+
+    &-optimize {
+        input.draggable {
+            background-color: darkcyan;
+        }
+    }
+
+    &-menu {
+        z-index: 1;
+        position: absolute;
+
+        top: 100%;
+        left: 0;
+
+        width: max-content;
+        height: fit-content;
+        box-sizing: border-box;
     }
 
 }

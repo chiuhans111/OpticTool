@@ -1,14 +1,15 @@
 @import "./ui_sheet.scss";
 
-input {
+input[type="number"] {
     background: black;
     border: none;
     color: white;
     padding: 3px 8px;
     border-radius: 4px;
     margin: 0px 4px;
+    max-width: 65px;
 
-    &:hover{
+    &:hover {
         background-color: #111;
     }
 }
@@ -32,28 +33,46 @@ button {
 }
 
 .ui_block {
-    border: solid 2px #111;
+    border: solid 2px #333;
     border-radius: 5px;
 
-    margin-bottom: -1px;
-    margin-right: -1px;
+    // margin-bottom: -1px;
+    // margin-right: -1px;
+
+    margin: 1px;
 
     box-sizing: border-box;
 
     display: flex;
     flex-direction: column;
     overflow: hidden;
+
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.9);
+
     // height: 100%;
 
     &-header {
-        padding: 8px 4px;
+        padding: 4px 4px;
         background-color: #333;
         font-weight: bold;
+        > * {
+            margin: 0;
+        }
     }
 
     &-body {
-        padding: 8px 4px;
         flex-grow: 1;
         background-color: #222;
     }
+}
+
+h1,
+h2,
+h3 {
+    margin-top: 10px;
+    margin-bottom: 5px;
+}
+
+p {
+    margin: 2px 0px;
 }

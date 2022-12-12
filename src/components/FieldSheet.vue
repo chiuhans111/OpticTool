@@ -4,14 +4,14 @@
             <p>Field Data</p>
         </div>
         <div class="ui_block-body">
-            <div>
+            <div class="content">
                 <label for="diameter">D=</label>
                 <OpticVarInput id="diameter" :step="0.01"
                     :variable="system.pupilDiameter" />
 
                 <label for="Z">Z=</label>
                 <OpticVarInput id="Z" :step="0.01"
-                    :variable="system.principlePlaneZ" />
+                    :variable="system.pupilOffset" />
             </div>
             <div class="ui_sheet-row"
                 v-for="field, i in system.fields" :key="i">
@@ -33,6 +33,9 @@
                             @click="addField(system.fields.length)">Add</button>
                     </div>
                 </div>
+            </div>
+            <div class="content">
+                <p>D=Entrance Diameter, Z=Distance to the pupil</p>
             </div>
         </div>
     </div>

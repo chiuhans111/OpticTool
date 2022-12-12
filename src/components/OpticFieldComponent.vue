@@ -25,9 +25,5 @@ export default {
 </script>
 
 <style>
-input {
-    width: 60px;
-    height: 20px;
-    margin: 0px 3px;
-}
+
 </style>

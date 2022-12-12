@@ -48,7 +48,7 @@ export default {
 
 
             // RAYTRACE
-            const result = await SpotTrace(this.system)
+            const result = await SpotTrace(this.system).array()
 
             // Plot
             ctx.resetTransform()
@@ -78,7 +78,7 @@ export default {
                 ctx.strokeStyle = ViewState.colorlist[i % this.system.fields.length % ViewState.colorlist.length]
                 let x = result[0][i]
                 let y = result[1][i]
-                ctx.rect(x, y, 5 / scale, 5 / scale)
+                ctx.rect(x - 1 / scale, y - 1 / scale, 2 / scale, 2 / scale)
                 ctx.stroke()
             }
         })
@@ -107,8 +107,8 @@ export default {
 <style scoped lang="scss">
 .analyze_plot {
     position: relative;
-    height: 500px;
     width: 200px;
+    height: 100%;
 
     &-container {
         position: relative;
@@ -117,6 +117,7 @@ export default {
         height: 100%;
 
         canvas {
+            position: absolute;
             background-color: black;
             border-radius: 4px;
         }

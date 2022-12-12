@@ -3,6 +3,8 @@ import OpticVar from "./OpticVar"
 class OpticField {
     angle = new OpticVar(0)
 
+    _SP = ["angle"]
+
     constructor(angle) {
         this.angle.value = angle || this.angle.value
     }
@@ -14,8 +16,8 @@ class OpticField {
      * @returns 
      */
     raypos(fx, fy, system) {
-        const R = system.pupilDiameter.value
-        const PZ = system.principlePlaneZ.value
+        const R = system.pupilDiameter.value / 2
+        const PZ = system.pupilOffset.value
         const a = this.angle.value
 
         const z = -1

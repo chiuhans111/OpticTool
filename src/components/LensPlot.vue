@@ -46,7 +46,7 @@ export default {
 
 
             // RAYTRACE
-            const result = await PlotTrace(this.system)
+            const result = await Promise.all(PlotTrace(this.system).map(x=>x.array()))
 
             // Plot
             ctx.resetTransform()

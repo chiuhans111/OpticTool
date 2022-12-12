@@ -7,7 +7,7 @@ import RayTrace from "./RayTrace"
  * @param {OpticSystem} system 
  * @returns 
  */
-async function SpotTrace(system) {
+function SpotTrace(system) {
     let raypos = []
     let raydir = []
     let N = 5
@@ -25,7 +25,7 @@ async function SpotTrace(system) {
 
             let fx = f * Math.cos(f2 * Math.PI * 2)
             let fy = f * Math.sin(f2 * Math.PI * 2)
-            
+
             for (let field of system.fields) {
                 raypos.push(field.raypos(fx, fy, system))
                 raydir.push(field.raydir(fx, fy, system))
@@ -37,7 +37,7 @@ async function SpotTrace(system) {
     raydir = tf.tensor(raydir).transpose()
 
     let result = RayTrace(system, raypos, raydir)
-    let spot = await result[result.length - 1]
+    let spot = result[result.length - 1]
 
     return spot
 }

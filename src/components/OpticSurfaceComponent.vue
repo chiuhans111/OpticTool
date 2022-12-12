@@ -1,13 +1,14 @@
 <template>
     <div>
-        <label for="thickness">t=</label>
-        <OpticVarInput id="thickness" :step="0.01"
-            :variable="surface.thickness" />
-        <span>, </span>
         <label for="curvature">c=</label>
         <OpticVarInput id="curvature" type="number"
             :step="0.0001"
             :variable="surface.shape.curvature" />
+        <span>, </span>
+        <label for="thickness">t=</label>
+        <OpticVarInput id="thickness" :step="0.01"
+            :variable="surface.thickness" />
+
         <span>, </span>
         <label for="material">n=</label>
         <input id="material" type="number" step="0.01"
@@ -15,7 +16,7 @@
             v-model.number="surface.material.index">
 
         <span> (R={{ (1 /
-                surface.shape.curvature.value).toFixed(2)
+                surface.shape.curvature.value).toPrecision(4)
         }})
         </span>
 
@@ -41,9 +42,5 @@ export default {
 </script>
 
 <style>
-input {
-    width: 60px;
-    height: 20px;
-    margin: 0px 3px;
-}
+
 </style>

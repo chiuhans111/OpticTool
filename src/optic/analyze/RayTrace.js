@@ -1,5 +1,6 @@
 import OpticSystem from "../OpticSystem"
 import * as tf from "@tensorflow/tfjs"
+import { toRaw } from "vue"
 
 
 /**
@@ -8,39 +9,41 @@ import * as tf from "@tensorflow/tfjs"
  * @param {tf.Tensor} raydir 
 */
 function RayTrace(system, raypos, raydir) {
-    tf.engine().startScope()
-    
-    let result = []
-    result.push(raypos.array())
+    return tf.tidy(() => {
 
-    let n1 = 1
-    let z = 0
-    for (let surface of system.surfaces) {
-        let n2 = surface.material.index
+        let result = []
+        result.push(raypos)
 
-
-        raypos = surface.shape.trace(raypos.sub(tf.tensor([[0], [0], [z]])), raydir)
-        let normal = surface.shape.normal(raypos)
+        let n1 = 1
+        let z = tf.tensor(0)
+        for (let surface of system.surfaces) {
+            let n2 = surface.material.index
 
 
-        raydir = raydir.div(raydir.mul(raydir).sum(0).sqrt()).mul(n1)
-        normal = normal.mul(raydir.mul(normal).sum(0).sign())
-        let tangent2 = tf.sub(1, raydir.mul(normal).sum(0))
-        let displace = tf.sub(n2 ** 2, tangent2).sqrt().sub(tf.sub(n1 ** 2, tangent2).sqrt())
-        raydir = raydir.add(normal.mul(displace))
+            raypos = surface.shape.trace(raypos.sub(tf.tensor([[0], [0], [1]]).mul(z)), raydir)
+            let normal = surface.shape.normal(raypos)
 
 
-        raypos = raypos.add(tf.tensor([[0], [0], [z]]))
-        result.push(raypos.array())
-        n1 = n2
+            raydir = raydir.div(raydir.mul(raydir).sum(0).sqrt()).mul(n1)
+            normal = normal.mul(raydir.mul(normal).sum(0).sign())
+            let cos = raydir.mul(normal).sum(0)
+            let tangent2 = tf.sub(n1 ** 2, cos.mul(cos))
+            let displace = tf.sub(n2 ** 2, tangent2).sqrt().sub(tf.sub(n1 ** 2, tangent2).sqrt())
+            raydir = raydir.add(normal.mul(displace))
 
-        z += surface.thickness.value
-    }
-    tf.engine().endScope()
+
+            raypos = raypos.add(tf.tensor([[0], [0], [1]]).mul(z))
+            result.push(raypos)
+            n1 = n2
+
+            z = z.add(toRaw(surface.thickness.value))
+        }
 
 
-    // result.push(raypos.add(raydir).arraySync())
-    return result
+        // result.push(raypos.add(raydir).arraySync())
+
+        return result
+    })
 }
 
 

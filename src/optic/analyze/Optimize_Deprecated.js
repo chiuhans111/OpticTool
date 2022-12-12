@@ -21,7 +21,6 @@ function Optimize(system) {
     variables = variables.filter(x => x.optimize)
     let rawVariables = variables.map(toRaw)
 
-    console.log(variables)
 
     let gradientFunctions = []
 

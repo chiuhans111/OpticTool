@@ -2,7 +2,15 @@ import OpticMaterial from "./material/OpticMaterial"
 import OpticField from "./OpticField"
 import OpticSurface from "./OpticSurface"
 import OpticVar from "./OpticVar"
+import serializer from "../scripts/Serializer"
 
+@serializer.serializable(
+    "$", {
+    surfaces: "s",
+    fields: "f",
+    pupilDiameter: "D",
+    pupilOffset: "Z"
+})
 class OpticSystem {
     surfaces = [
         new OpticSurface(3, 0.066667, new OpticMaterial(1.515)),
@@ -24,8 +32,6 @@ class OpticSystem {
     pupilOffset = new OpticVar(10)
 
     update = 0
-
-    _SP = ["surfaces", "fields", "pupilDiameter", "pupilOffset"]
 }
 
 

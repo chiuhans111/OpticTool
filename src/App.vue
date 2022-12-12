@@ -44,7 +44,7 @@
 import LensSheet from './components/LensSheet.vue'
 import LensPlot from './components/LensPlot.vue'
 import optic from './optic'
-import serializer from './optic/Serializer'
+import serializer from './scripts/Serializer'
 import FieldSheet from './components/FieldSheet.vue'
 import AnalyzePlot from './components/AnalyzePlot.vue'
 import OptimizeWizard from './components/OptimizeWizard.vue'
@@ -99,6 +99,7 @@ export default {
         this.stateHead += 1
       }
     })),
+
     open() {
       let a = document.createElement('input')
       a.type = 'file'
@@ -108,7 +109,6 @@ export default {
         reader.readAsText(a.files[0], "UTF-8")
         reader.onload = function (e) {
           vm.load(e.target.result)
-          console.log(e.target.result)
         }
       }
       a.click()

@@ -1,9 +1,13 @@
 import OpticSystem from "./OpticSystem"
 import OpticVar from "./OpticVar"
+import serializer from "../scripts/Serializer"
+
+@serializer.serializable(
+    "f", {
+    angle: "a",
+})
 class OpticField {
     angle = new OpticVar(0)
-
-    _SP = ["angle"]
 
     constructor(angle) {
         this.angle.value = angle || this.angle.value

@@ -1,6 +1,7 @@
 import * as tf from "@tensorflow/tfjs"
 import { toRaw } from "vue"
 import OpticVar from "../OpticVar"
+import serializer from "../../scripts/Serializer"
 
 function ensurevalue(v) {
     if (v instanceof tf.Tensor) {
@@ -9,10 +10,12 @@ function ensurevalue(v) {
     else return v
 }
 
+@serializer.serializable(
+    "o", {
+    curvature: "c",
+})
 class OpticShapeSpherical {
     curvature = new OpticVar(0)
-
-    _SP = ["curvature"]
 
     constructor(curvature) {
         this.curvature.value = curvature

@@ -1,4 +1,11 @@
 .ui_sheet {
+    position: relative;
+
+    &-group {
+        display: flex;
+        flex-direction: column;
+    }
+
     &-row {
         position: relative;
         margin: 5px;
@@ -9,5 +16,26 @@
             margin-right: 5px;
         }
     }
+
+
     box-sizing: border-box;
+}
+
+.list-item {
+    display: inline-block;
+    margin-right: 10px;
+}
+
+.list-enter-active,
+.list-leave-active {
+    transition-property: opacity, max-height;
+    transition-duration: 0.1s;
+    position: relative;
+    max-height: 30px;
+}
+
+.list-enter-from,
+.list-leave-to {
+    opacity: 0;
+    max-height: 0;
 }

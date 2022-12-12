@@ -39,6 +39,8 @@ export default {
             this.update()
         },
         update: asyncThrottle(10, async function () {
+            if (this.ctx === null) return
+            
             /**@type {HTMLCanvasElement} */
             const canvas = this.canvas
             /**@type {CanvasRenderingContext2D} */
@@ -46,7 +48,7 @@ export default {
 
 
             // RAYTRACE
-            const result = await Promise.all(PlotTrace(this.system).map(x=>x.array()))
+            const result = await Promise.all(PlotTrace(this.system).map(x => x.array()))
 
             // Plot
             ctx.resetTransform()
@@ -177,9 +179,6 @@ export default {
                 }
                 ctx.stroke()
             }
-
-
-
 
         }, 50)
     },

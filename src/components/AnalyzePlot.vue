@@ -41,6 +41,9 @@ export default {
             this.update()
         },
         update: asyncThrottle(10, async function () {
+            if (this.ctx === null) {
+                console.error('ctx not ready')
+            }
             /**@type {HTMLCanvasElement} */
             const canvas = this.canvas
             /**@type {CanvasRenderingContext2D} */

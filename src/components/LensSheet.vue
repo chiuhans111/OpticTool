@@ -5,29 +5,15 @@
         </div>
         <div class="ui_block-body">
 
-            <div class="ui_sheet-row"
-                v-for="surface, i in system.surfaces"
-                :key="i" @mousedown="hover(surface)">
-                <div class="row">
-                    <div class="ui_sheet-row-ui">
-                        <button
-                            @click="system.surfaces.splice(i, 1)">Del</button>
-                        <button
-                            @click="addSurface(i)">Add</button>
-                    </div>
+            <SheetUI :list="system.surfaces"
+                :builder="buildSurface">
+                <template #item="[surface, i]">
                     <OpticSurfaceComponent
-                        :surface="surface">
+                        :surface="surface" :key="i">
                     </OpticSurfaceComponent>
-                </div>
-            </div>
-            <div class="ui_sheet-row">
-                <div class="row">
-                    <div class="ui_sheet-row-ui">
-                        <button
-                            @click="addSurface(system.surfaces.length)">Add</button>
-                    </div>
-                </div>
-            </div>
+                </template>
+            </SheetUI>
+
             <div class="content">
                 <p>t=thickness, c=curvature (1/R), n=index
                     of
@@ -40,6 +26,7 @@
 <script>
 import OpticSurface from '@/optic/OpticSurface'
 import OpticSystem from '@/optic/OpticSystem'
+import SheetUI from './common/SheetUI.vue'
 import OpticSurfaceComponent from './OpticSurfaceComponent.vue'
 import ViewState from './ViewControl'
 
@@ -48,11 +35,12 @@ export default {
         system: OpticSystem
     },
     components: {
-        OpticSurfaceComponent
+        OpticSurfaceComponent,
+        SheetUI
     },
     methods: {
-        addSurface(i) {
-            this.system.surfaces.splice(i, 0, new OpticSurface())
+        buildSurface(i) {
+            return new OpticSurface()
         },
         hover(surface) {
             ViewState.focusedSurface = surface

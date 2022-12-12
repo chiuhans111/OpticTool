@@ -4,7 +4,7 @@
         'optic_var_input-optimize': variable.optimize
     }">
         <input class="draggable" ref="input" type="number"
-            v-model="variable.value" :step="step">
+            v-model.number="variable.value" :step="step">
 
         <div ref="menu" class="optic_var_input-menu"
             v-if="editmode" @mousedown="menuclick">
@@ -42,7 +42,7 @@ export default {
     },
     methods: {
         mousedown(event) {
-            this.tempValue = this.variable.value
+            this.tempValue = this.variable.num()
             if (!this.editmode) {
                 event.preventDefault()
                 this.tweakmode = true
@@ -58,7 +58,7 @@ export default {
             this.tweakmode = false
         },
         mousemove(event) {
-            if (this.tweakmode) {
+            if (this.tweakmode && event.movementX!=0) {
                 this.tweaked = true
                 this.tempValue += event.movementX * this.step
                 this.updatevalue()

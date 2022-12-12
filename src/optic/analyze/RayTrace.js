@@ -36,7 +36,7 @@ function RayTrace(system, raypos, raydir) {
             result.push(raypos)
             n1 = n2
 
-            z = z.add(toRaw(surface.thickness.value))
+            z = z.add(toRaw(surface.thickness.num()))
         }
 
 

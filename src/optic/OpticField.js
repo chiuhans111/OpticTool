@@ -20,9 +20,9 @@ class OpticField {
      * @returns 
      */
     raypos(fx, fy, system) {
-        const R = system.pupilDiameter.value / 2
-        const PZ = system.pupilOffset.value
-        const a = this.angle.value
+        const R = system.pupilDiameter.num() / 2
+        const PZ = system.pupilOffset.num()
+        const a = this.angle.num()
 
         const z = -1
         const x = fx * R
@@ -31,7 +31,7 @@ class OpticField {
     }
 
     raydir(fx, fy) {
-        return [0, -Math.sin(this.angle.value / 180 * Math.PI), Math.cos(this.angle.value / 180 * Math.PI)]
+        return [0, -Math.sin(this.angle.num() / 180 * Math.PI), Math.cos(this.angle.num() / 180 * Math.PI)]
     }
 }
 

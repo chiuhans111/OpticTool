@@ -21,7 +21,7 @@ async function Optimize(system) {
     variables = variables.filter(x => x.optimize)
 
     let rawVariables = variables.map(toRaw)
-    let x0 = rawVariables.map(x => x.value)
+    let x0 = rawVariables.map(x => x.num())
 
 
     async function evaluate(x) {

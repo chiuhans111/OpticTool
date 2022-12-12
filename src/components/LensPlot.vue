@@ -40,7 +40,7 @@ export default {
         },
         update: asyncThrottle(10, async function () {
             if (this.ctx === null) return
-            
+
             /**@type {HTMLCanvasElement} */
             const canvas = this.canvas
             /**@type {CanvasRenderingContext2D} */
@@ -58,7 +58,7 @@ export default {
             let ttl = 0
 
             for (let surface of this.system.surfaces) {
-                ttl += surface.thickness.value
+                ttl += surface.thickness.num()
             }
 
 

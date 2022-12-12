@@ -26,7 +26,7 @@ function Optimize(system) {
 
     for (let variable of rawVariables) {
         gradientFunctions.push(tf.grad(function f(tensor) {
-            let original = variable.value
+            let original = variable.num()
             variable.value = tensor
             let result = Merit(system)
             variable.value = original
@@ -43,7 +43,7 @@ function Optimize(system) {
         for (let i = 0; i < variables.length; i++) {
             let gradient = 0
             try {
-                gradient = gradientFunctions[i](tf.tensor([rawVariables[i].value])).arraySync()
+                gradient = gradientFunctions[i](tf.tensor([rawVariables[i].num()])).arraySync()
             } catch (e) {
                 console.log('gradient error', e)
             }

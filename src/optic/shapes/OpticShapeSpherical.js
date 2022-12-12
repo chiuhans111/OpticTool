@@ -1,14 +1,14 @@
 import * as tf from "@tensorflow/tfjs"
-import { toRaw } from "vue"
+// import { toRaw } from "vue"
 import OpticVar from "../OpticVar"
 import serializer from "../../scripts/Serializer"
 
-function ensurevalue(v) {
-    if (v instanceof tf.Tensor) {
-        return v.arraySync()[0]
-    }
-    else return v
-}
+// function ensurevalue(v) {
+//     if (v instanceof tf.Tensor) {
+//         return v.arraySync()[0]
+//     }
+//     else return v
+// }
 
 @serializer.serializable(
     "o", {
@@ -27,11 +27,11 @@ class OpticShapeSpherical {
     * @returns {tf.Tensor} intersection position
     */
     trace(raypos, raydir) {
-        const c = toRaw(this.curvature.value)
+        const c = this.curvature.num()
         return tf.tidy(() => {
             let l = raypos.gather(2).div(raydir.gather(2)).mul(-1)
 
-            if (ensurevalue(c) != 0) {
+            if (c != 0) {
 
                 const A = raydir.mul(raydir).sum(0).mul(c)
                 const B = raypos.mul(raydir).sum(0).mul(c).sub(raydir.gather(2)).mul(2)
@@ -51,11 +51,11 @@ class OpticShapeSpherical {
     * @returns {tf.Tensor} normal vector at given position
     */
     normal(raypos) {
-        const c = toRaw(this.curvature.value)
+        const c = this.curvature.num()
 
         return tf.tidy(() => {
             let p = raypos.mul(0).add(tf.tensor([[0], [0], [-1]]))
-            if (ensurevalue(c) != 0) {
+            if (c != 0) {
                 let n = raypos.sub(tf.tensor([[0], [0], [1]]).div(c))
                 p = n.div(n.mul(n).sum(0).sqrt())
             }
@@ -64,10 +64,9 @@ class OpticShapeSpherical {
         })
     }
 
-
     surface(r) {
         const r2 = r ** 2
-        return r2 * this.curvature.value / (1 + Math.sqrt(1 - r2 * this.curvature.value ** 2))
+        return r2 * this.curvature.num() / (1 + Math.sqrt(1 - r2 * this.curvature.num() ** 2))
     }
 }
 

@@ -1,4 +1,7 @@
-# optictool
+# OpticTool
+A web based interactive lens design software, simulation and optimization of spherical lenses.
+
+Demo at: https://chiuhans111.github.io/OpticTool/
 
 ## Project setup
 ```
